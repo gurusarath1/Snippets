@@ -4,6 +4,20 @@ from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.pyplot as plt
 from sklearn.linear_model import LinearRegression
 
+print('\nUsing Pandas----------------------------------------------------------------------------------------')
+
+DataSet = pd.read_csv('LinRegSampleDataSet_2D_withHeader.csv')
+print(DataSet.head(5))
+
+y = DataSet['outputVal']
+X = DataSet.drop('outputVal', axis = 1)
+
+reg = LinearRegression().fit(X,y)
+print('Predicted value - ', reg.predict(np.array([[3,3]])))
+
+
+print('\nUsing Numpy 1D----------------------------------------------------------------------------------------')
+
 # Load the dataset
 DataSet = np.loadtxt('LinRegSampleDataSet.csv', delimiter = ',', unpack = True, dtype = float)
 print(DataSet)
@@ -40,10 +54,10 @@ plt.plot(x_line, y_line, 'r--')
 plt.scatter(x_forPrediction, predictedValue, marker = '*', s=300)
 plt.show()
 
-#----------------------------------------------------------------------------------------
+print('\nUsing Numpy 2D----------------------------------------------------------------------------------------')
 
 # Load the dataset
-DataSet = np.loadtxt('LinRegSampleDataSet_3D.csv', delimiter = ',', unpack = True, dtype = float)
+DataSet = np.loadtxt('LinRegSampleDataSet_2D.csv', delimiter = ',', unpack = True, dtype = float)
 print(DataSet)
 
 x1 = np.array(	[DataSet[0]]	)	# Make it a 2D array
