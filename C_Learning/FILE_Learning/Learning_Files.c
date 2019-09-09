@@ -19,14 +19,18 @@ int main()
 
     FILE *filePointer;
     char charX;
+    char stringX[100];
+    int intX;
+    float floatX;
     char charBuffer[200]; // max size of a line possible is 200
     char TextToWrite[] = "Howdy !! Welcome, this text will be written to the file";
     char TextToAppend[] = "Howdy !! Welcome, this text will be appended to the file\nThanks and Gig \'em\n";
 
+    // Char read
     if ( (filePointer = fopen("TestReadFile.txt", "r")) != NULL )
     {
         // Reading one character at a time till end of line is reached.
-        while(fscanf(filePointer, "%c", &charX) != EOF) // fscanf returns EOF when end of line is reached
+        while( (charX = fgetc(filePointer)) != EOF) // fgetc returns EOF when end of line is reached
         {
             printf("%c", charX);
         }
@@ -37,6 +41,7 @@ int main()
     }
 
 
+    // line read
     if ( (filePointer = fopen("TestReadFile.txt", "r")) != NULL )
     {
         // Reading one line at time till end of file is reached
@@ -49,7 +54,20 @@ int main()
 
     }
 
+    // Formatted read
+    if ( (filePointer = fopen("TestFormattedRead.txt", "r")) != NULL )
+    {
+        while( fscanf(filePointer, "%s %d %f %c", &stringX, &intX, &floatX, &charX) != EOF ) // fscanf returns EOF when end of line is reached
+        {
+            printf("%s %d %f %c\n", stringX, intX, floatX, charX);
+        }
 
+        fclose(filePointer);
+
+    }
+
+
+    // Overwrite
     if ( (filePointer = fopen("TestWriteFile.txt", "w")) != NULL )
     {
         fprintf(filePointer, "%s", TextToWrite);
@@ -58,7 +76,7 @@ int main()
 
     }
 
-
+    // Append
     if ( (filePointer = fopen("TestAppendFile.txt", "a")) != NULL )
     {
         fprintf(filePointer, "%s", TextToAppend);
