@@ -1,0 +1,116 @@
+\documentclass[a4paper,12pt]{book}
+
+%For margins
+\usepackage[a4paper, inner=1.7cm, outer=2.7cm, top=2cm, bottom=2cm, bindingoffset=1.2cm]{geometry}
+\usepackage[english]{babel}
+%improves justification
+\usepackage{microtype}
+%pictures
+\usepackage{graphicx}
+%To wrap text around figures
+\usepackage{wrapfig}
+%Better looking lists
+\usepackage{enumitem}
+%Fancy headers
+\usepackage{fancyhdr}
+%Better math formula
+\usepackage{amsmath}
+%for index
+\usepackage{index}
+%Some random text
+\usepackage{blindtext}
+
+\begin{document}
+
+\title{\Large{\textbf{This is the Title}}}
+\author{Guru Sarath}
+\date{Today}
+\maketitle
+
+%removes some blank pages
+\let\cleardoublepage\clearpage
+
+\chapter{Title Of Chapter}
+\blindmathtrue
+\blindtext[7]
+%Squeeze texts in one page 
+\enlargethispage{\baselineskip}
+\section{Section}
+\blinditemize
+\blindenumerate
+
+%new page
+\pagebreak
+\section{Inserting image}
+\blindtext
+%inserting picture
+%h - here
+%t - top
+%b - bottom
+%p - center
+\begin{figure}[ht]
+\centering
+\includegraphics[width=8cm]{pic1.png}
+\end{figure}
+\blindtext
+
+
+\newpage
+% * - section to be listed in navigation bar but not in table of contexts
+\section*{Wrap Image}
+\begingroup
+\setlength{\intextsep}{0pt}
+\setlength{\columnsep}{15pt}
+
+%r - right
+\begin{wrapfigure}{r}{0.45\textwidth}
+\centering
+\includegraphics[width=\linewidth]{pic1.png}
+\caption{Pretty Picture}\label{fig:pic new}
+\end{wrapfigure}
+
+\blindtext[3]
+
+\endgroup
+
+\section*{Spacing}
+%prints latex
+\LaTeX\
+%Line break
+Just random stuff here \\
+This line is indented.\\[50pt]
+Hi all\\
+
+%some special characters
+\% \$ \& \_ \textbackslash
+
+%remove indent
+\noindent
+No indent here
+
+
+\newpage
+
+\section[Title in Table of contents here]{Lists}
+
+\begin{itemize}
+\item Cars
+\item Bike
+\end{itemize}
+
+
+\begin{enumerate}[label=\Roman*, font=\bfseries]
+\item Cups
+\item Cakes
+\end{enumerate}
+
+
+
+\end{document}
+
+
+
+
+
+
+
