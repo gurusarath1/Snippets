@@ -5,7 +5,7 @@ using namespace std;
 class Box
 {
 
-	float l,b,h; // Private by default
+	float l,b,h, volume; // Private by default
 
 public:
 
@@ -36,23 +36,30 @@ public:
 		this->h = h;
 	}
 
-	float get_volume()
+	float calculate_volume()
 	{
+		volume = l * b * h;
 		return l * b * h;
 	}
 
-
+	float get_volume(); // This member function is defined outside the class (using the scope resolution operator ::)
 };
+
+
+float Box::get_volume()
+{
+	return volume;
+}
+
 
 int main()
 {
 
 	Box b1(1,2,3);
 
-	cout << b1.get_volume() << "\n";
-
+	cout << b1.calculate_volume() << "\n";
 	b1.setDimensions(3,3,3);
-
+	cout << b1.calculate_volume() << "\n";
 	cout << b1.get_volume() << "\n";
 
 
