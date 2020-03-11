@@ -66,3 +66,15 @@ int main()
 	return 0;
 
 }
+
+
+/*
+OUTPUT ------------
+
+Creating Box
+6
+27
+27
+Destroying box
+
+*/

@@ -49,16 +49,20 @@ public:
 
 int main()
 {
-
 	Box b1(1,2,3); // Way to create object 1
-
 	Box b2 = Box(2,2,4); // Way to create object 2
-
 	sphere s1(3);
-
 	sphere s2 = 4; // Way to create obejct 3 (only works for objects with constructors with one parameter)
 
-
 	return 0;
-
 }
+
+/*
+OUTPUT --------
+
+Creating Box
+Creating Box
+Creating Sphere
+Creating Sphere
+
+*/
