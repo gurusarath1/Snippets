@@ -36,7 +36,7 @@ int main()
 	cout << "---------------------------\n";
 
 
-	vector<char> v3(10,'a'); // Create a vector of size 10 and ini
+	vector<char> v3(10,'a'); // Create a vector of size 10 and initialize to 'a'
 	for(int i=0; i<v3.size(); i++)
 	{
 		cout << v3[i] << "  ";
@@ -55,6 +55,33 @@ int main()
 	cout << "\n";
 
 
+	cout << "---------------------------\n";
+
+	vector<float> a;
+	vector<float> b;
+
+	a.push_back(9.1);
+	a.push_back(1.5);
+	a.push_back(0.5);
+
+	b.push_back(10.1);
+	b.push_back(6.5);
+	a.push_back(7.5);
+
+	if(a == b)
+	{
+		cout << "a and b vector are equal \n";
+	} else {
+		cout << "a and b Not Equal\n";
+	}
+
+	vector<float> c;
+
+	if(c.empty())
+	{
+		cout << "c vector is empty\n";
+	}
+
 	return 0;
 }
 
@@ -70,6 +97,9 @@ Size = 4
 ---------------------------
 a  a  a  a  a  a  a  a  a  a
 x  x  x  x  x  x  x  x  x  x
+---------------------------
+a and b Not Equal
+c vector is empty
 
 */
 
