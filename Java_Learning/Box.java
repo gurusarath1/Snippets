@@ -74,7 +74,6 @@ public class Box {
     METHOD OVERLOADING -----------
     dataType and number of arguments is used to guide which version to call.
     Return type do not play a role in overload resolution.
-    
     */
     void setDimensions(float x)
     {

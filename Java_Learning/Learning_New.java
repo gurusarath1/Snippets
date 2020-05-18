@@ -112,6 +112,33 @@ public class Learning_New {
         System.out.println(box_2.getVolume()); //125
         System.out.println(box_3.getVolume()); //10
         
+        
+        System.out.println("Int_Stack -------- ");
+        
+        Int_Stack stk = new Int_Stack();
+        stk.push(1);
+        stk.push(11);
+        stk.push(111);
+        stk.push(1111);
+        stk.push(11111);
+        stk.push(111111);
+        stk.push(111111);
+        
+        for(int i=0; i<5; i++)
+        {
+            System.out.println(stk.pop());
+        }
+        
+        Int_Stack stk1 = new Int_Stack();
+        Int_Stack stk2 = new Int_Stack();
+        
+        // Ways to access static members 
+        System.out.println(stk1.numberOfObjects);
+        System.out.println(Int_Stack.numberOfObjects);
+        System.out.println(Int_Stack.getNumberOfObjects());
+        
+        
+        
     }
     
 }
