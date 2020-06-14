@@ -1,25 +1,23 @@
 puts "Amazon intern 2020"
 
-a = 3
+# This is a single line comment
 
-if a > 3
-    puts "a is greater than 3 (a = #{a})"
-  else
-    puts "a is not greater than 3 (a = #{a})"
+=begin
+This is a multiline comment
+=end
+
+arrayX = ['ant', 'tiger', 991]
+HashTableX = { 'Guru' => 1 ,
+				'Sarath' => 2,
+				'Ruby' => 3 }
+
+puts 'Array element 0 = ' + arrayX[0]
+puts 'Hash element \'Ruby\' = ' + HashTableX['Ruby'].to_s
+
+count = 19
+
+if count > 10
+	puts 'Variable count is less than 10'
 end
 
-
-class Book
-
-
-
-  def initialize(title, author,num_pages)
-    @title = title
-    @author =  author
-    @num_pages = num_pages
-  end
-end
-#
-#book1 = Book.new
-book2 = Book.new("Happy feet", "Some guy", 10)
-puts "#{book2.instance_variable_get(:@title)}"
+puts :Guru
