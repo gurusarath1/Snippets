@@ -1,0 +1,32 @@
+.card {
+	
+	background: "red";
+	box-shadow: 0 4px 8px 0 rgba(0,0,0,0.5);
+	color: rgba(0,0,0,0.6);
+  	transition: 0.3s;
+  	border-radius: 5px;
+  	margin: 20px 5px 5px 5px;
+  	padding: 15px 15px 15px 15px;
+}
+
+.button-1 {
+
+	background: "green";
+
+}
+
+.card .card-title {
+	font-size: 25px;
+	font-style: "normal";
+	font-weight: "bold";
+	font-family: "monospace";
+	margin-bottom: 5px;
+	color: rgba(0,0,0,1);
+}
+
+.card .card-body {
+	font-size: 15px;
+	font-style: "italic";
+	font-family: "monospace";
+	color: rgba(0,0,0,0.6);
+}
