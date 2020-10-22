@@ -17,8 +17,7 @@ int main()
 	
 	cout << "KEY" << "\tVALUE\n";
 	p = m1.begin();
-	while(p != m1.end())
-	{
+	while(p != m1.end()) {
 		cout << p->first << "\t" << p->second << "\n";
 		p++;
 	}
@@ -39,8 +38,7 @@ int main()
 	cout << "Remove 'b' \n";
 	cout << "KEY" << "\tVALUE\n";
 	p = m1.begin();
-	while(p != m1.end())
-	{
+	while(p != m1.end()) {
 		cout << p->first << "\t" << p->second << "\n";
 		p++;
 	}
@@ -48,8 +46,7 @@ int main()
 
 	cout << "----------------------------------\n";
 
-	if(m1.empty())
-	{
+	if(m1.empty()) {
 		cout << "m1 is empty\n";
 	} else {
 		cout << "m1 is not empty\n";
@@ -61,29 +58,47 @@ int main()
 
 	cout << "Size of m1 (After erase) : " << m1.size() << "\n";
 
+	cout << "=================== Part 2 (Different ways to insert elements) ===================" << endl;
+
+	map<char, int> newMap;
+
+	newMap.insert(pair<char, int>('x', 0));
+	newMap.insert({'a',1});
+	newMap.insert({'b',2});
+	newMap['c'] = 3;
+
+	auto iter_obj = newMap.begin();
+
+	while(iter_obj != newMap.end()) {
+		cout << iter_obj->first << " : " << iter_obj->second << endl;
+		iter_obj++;
+	}
+
+	cout << "=================== Check if a key is present ===================" << endl;
+
+	if(newMap.find('a') != newMap.end()) {
+		cout << "Key found | " << "Value = " << newMap['a'] << endl;
+	} else {
+		cout << "Key not found \n";
+	}
+
+	if(newMap.find('m') != newMap.end()) {
+		cout << "Key found | " << "Value = " << newMap['m'] << endl;
+	} else {
+		cout << "Key not found \n";
+	}
+
+	cout << "=================== Removing an element ===================" << endl;
+
+	newMap.erase('b'); // Erasing by key
+
+	iter_obj = newMap.begin();
+
+	while(iter_obj != newMap.end()) {
+		cout << iter_obj->first << " : " << iter_obj->second << endl;
+		iter_obj++;
+	}
+
+
+
 }
-
-/*
-OUTPUT ---------------------------------------------
-
-1
-KEY     VALUE
-a       0
-b       1
-c       2
-
-Size of m1 : 3
-0
-Size of m1 (After trying to access 'd') : 4
-----------------------------------
-Remove 'b'
-KEY     VALUE
-a       0
-c       2
-d       0
-
-----------------------------------
-m1 is not empty
-Max size of m1 = 461168601842738790
-Size of m1 (After erase) : 0
-*/
