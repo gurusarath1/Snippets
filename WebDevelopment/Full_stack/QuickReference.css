@@ -1,0 +1,73 @@
+/*
+    CSS Comment
+*/
+
+
+/* Tag selector */
+body {
+    background-color: aquamarine;
+}
+
+img {
+    border-radius: 100px;
+    border-style: solid;
+    border-color: yellow;
+}
+
+/* Class selector */
+.head_class_1 {
+    color: brown;
+    border-style: double;
+}
+
+/* Id selector */
+#ul_list {
+    background-color: teal;
+    color: blue;
+}
+
+/* Descendant Selectors */
+ul li {
+    border-style: dotted;
+    border-color: chartreuse;
+    padding: 5px;
+}
+
+/* Selecting Multiple */
+h2, h3, h4 {
+    border-style: double;
+    border-color: lightskyblue;
+}
+
+/* Pseudo-class Selectors */
+a:link {
+    color: blue;
+}
+
+a:hover {
+    color: blueviolet;
+}
+
+a:active {
+    color: greenyellow;
+}
+
+a:visited {
+    color: red;
+}
+
+ol li:first-child {
+    background-color: hotpink;
+}
+
+ol li:last-child {
+    background-color: lawngreen;
+}
+
+li:nth-child(2n) {
+    border-style: solid;
+    border-color: lightcoral;
+    width: 200px;
+}
+
+
