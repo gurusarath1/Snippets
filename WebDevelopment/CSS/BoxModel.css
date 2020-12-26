@@ -1,0 +1,15 @@
+img {
+
+    width: 50%;
+    height: 50%;
+
+    border-style: solid;
+
+    padding: 35px 35px 5px 35px;
+    margin: 15px 15px 15px 15px;
+
+}
+
+.main_content {
+    background-color: burlywood;
+}
