@@ -1,0 +1,16 @@
+.centering_elements {
+    border: 2px solid red;
+    background-color: cadetblue;
+
+    margin-top: 2px;
+    margin-bottom: 2px;
+    margin-left: auto;
+    margin-right: auto;
+
+    width: 50%;
+    height: 10%;
+}
+
+/*
+If you set the values of the left and right margin values of an element to auto, you will get a perfectly centered element along the horizontal!
+*/
