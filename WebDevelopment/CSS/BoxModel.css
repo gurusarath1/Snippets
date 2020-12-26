@@ -5,7 +5,7 @@ img {
 
     border-style: solid;
 
-    padding: 35px 35px 5px 35px;
+    padding: 35px 35px 5px 35px; /*top - right - bottom - left*/
     margin: 15px 15px 15px 15px;
 
 }
