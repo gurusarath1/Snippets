@@ -1,0 +1,30 @@
+.flex_container_div {
+
+    display: flex; /* Flex box container */
+    
+    /* flex-flow: column wrap; */
+    flex-wrap: wrap; /* default - nowrap */
+    flex-direction: column; /* default - row */
+    
+    
+    justify-content: center;  /* alignment along main axis */
+    align-items: flex-end;  /* alignment along cross axis */
+
+    height: 70%;
+
+
+}
+
+.flex_item_div {
+
+    width: 150px;
+    height: 150px;
+    background-color: blueviolet;
+    margin: 10px 10px 10px 10px;
+
+    /* flex: 0 1 auto; */  /* flex-gorw flex-shrink flex-basis */
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: auto;
+
+}
