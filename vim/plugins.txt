@@ -1,3 +1,5 @@
 Plugins -----
 
 https://github.com/vim-scripts/AutoComplPop
+
+https://github.com/vim-syntastic/syntastic
