@@ -1,3 +1,15 @@
+// File operations
+:q - Quit
+:q! - Quit and dont change the file
+
+:w - save
+:wq - save and quit
+
+:e! - undo all changes since last save
+
+
+
+
 // Modes ---------------------------------------------------------------------------------
 Esc - Normal mode
 i - insert mode
@@ -6,12 +18,17 @@ v - visual mode
 o - insert mode + new line added
 V - visual line mode
 
+
+
+
 Search ---------------------------------------------------------------------------------
 /[pattern]  enter - search
 n forward
 N backward
 
 /\<word\> - whole word search
+
+
 
 Find and Replace ---------------------------------------------------------------------------------
 :[range]s/{pattern}/{string}/[flags] [count]
