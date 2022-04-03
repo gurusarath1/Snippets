@@ -15,8 +15,8 @@ Search -------------------------------------------------------------------------
 
 Find and Replace ---------------------------------------------------------------------------------
 :[range]s/{pattern}/{string}/[flags] [count]
-Example
 
+Examples --
 s/foo/bar - replace foo with bar in current line (only one occurance)
 %s/foo/bar - replace foo with bar in current file (all)
 %s/foo/bar/i - replace foo with bar in current file (all)(ignore case)
@@ -26,7 +26,7 @@ s/foo/bar - replace foo with bar in current line (only one occurance)
 // Movements ---------------------------------------------------------------------------------
 :[line num] - jump to a line
 
-e,b - left right word movement
+b,w - left right word movement
 {} - up down block movement
 gg G - line 0 and line end
 ^ $ - start of line and end of line
