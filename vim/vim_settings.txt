@@ -1,0 +1,13 @@
+set number
+syntax on
+
+set incsearch
+set hlsearch
+set ignorecase
+set smartcase
+
+colorscheme monokai
+
+set history=1000
+
+"set spell
