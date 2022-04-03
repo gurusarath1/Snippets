@@ -1,0 +1,65 @@
+// Modes ---------------------------------------------------------------------------------
+Esc - Normal mode
+i - insert mode
+v - visual mode
+
+o - insert mode + new line added
+V - visual line mode
+
+Search ---------------------------------------------------------------------------------
+/[pattern]  enter - search
+/ or n forward
+? or N backward
+
+/\<word\> - whole word search
+
+Find and Replace ---------------------------------------------------------------------------------
+:[range]s/{pattern}/{string}/[flags] [count]
+Example
+
+s/foo/bar - replace foo with bar in current line (only one occurance)
+%s/foo/bar - replace foo with bar in current file (all)
+%s/foo/bar/i - replace foo with bar in current file (all)(ignore case)
+
+
+
+// Movements ---------------------------------------------------------------------------------
+:[line num] - jump to a line
+
+e,b - left right word movement
+{} - up down block movement
+gg G - line 0 and line end
+^ $ - start of line and end of line
+
+
+
+// Delete/Cut ---------------------------------------------------------------------------------
+:[start],[end]d - line range delete; 
+. (Dot): Refers to the current line
+$ (Dollar): Denotes the end of file
+% (Percentage): Matches all the lines in the file
+    
+%d - delete entire file
+
+:g/[pattern]/d - delete lines containing the pattern
+
+dd - delete current line
+dw - delete current word
+
+
+
+// Copy ---------------------------------------------------------------------------------
+
+yy - copy current line
+3yy - copy 3 lines from current position
+
+Visual mode -
+y -copy
+d - cut
+
+// Paste ---------------------------------------------------------------------------------
+p - paste after cursor
+P - Paste before cursor
+
+
+
