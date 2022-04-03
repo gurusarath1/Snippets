@@ -11,4 +11,7 @@ colorscheme monokai
 
 set history=1000
 
+set cursorline
+set cursorcolumn
+
 "set spell
