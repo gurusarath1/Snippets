@@ -8,8 +8,8 @@ V - visual line mode
 
 Search ---------------------------------------------------------------------------------
 /[pattern]  enter - search
-/ or n forward
-? or N backward
+n forward
+N backward
 
 /\<word\> - whole word search
 
