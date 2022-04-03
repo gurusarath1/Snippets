@@ -1,3 +1,28 @@
+" Vim-PLUG
+call plug#begin()
+
+" Text auto complete
+Plug 'vim-scripts/AutoComplPop'
+
+" C++ error checker
+Plug 'vim-syntastic/syntastic'
+
+call plug#end()
+
+
+" INSTALL PLUGIN LIKE
+" :PlugInstall
+" :PlugUpdate
+
+
+
+
+
+
+
+
+
+
 " Appearance
 set number
 syntax on
@@ -21,18 +46,4 @@ set noerrorbells
 set novisualbell t_vb=
 set belloff=all
 
-" Vim-PLUG
-call plug#begin()
 
-" Text auto complete
-Plug 'vim-scripts/AutoComplPop'
-
-" C++ error checker
-Plug 'vim-syntastic/syntastic'
-
-call plug#end()
-
-
-" INSTALL PLUGIN LIKE
-" :PlugInstall
-" :PlugUpdate
