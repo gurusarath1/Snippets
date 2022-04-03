@@ -1,24 +1,33 @@
+" Appearance
 set number
 syntax on
+colorscheme monokai
+set cursorline
+set cursorcolumn
 set list
 
+" Search Settings
 set incsearch
 set hlsearch
 set ignorecase
 set smartcase
 
-colorscheme monokai
+"set spell
 
 set history=1000
 
-set cursorline
-set cursorcolumn
+" Vim-PLUG
+call plug#begin()
 
-"set spell
+" Text auto complete
+Plug 'vim-scripts/AutoComplPop'
+
+" C++ error checker
+Plug 'vim-syntastic/syntastic'
+
+call plug#end()
 
 
-"call plug#begin('./plugged')
-
-"Plug 'vim-scripts/AutoComplPop'
-
-"call plug#end()
+" INSTALL PLUGIN LIKE
+" :PlugInstall
+" :PlugUpdate
