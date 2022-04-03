@@ -16,6 +16,11 @@ set smartcase
 
 set history=1000
 
+" No Annoying sounds please
+set noerrorbells
+set novisualbell t_vb=
+set belloff=all
+
 " Vim-PLUG
 call plug#begin()
 
