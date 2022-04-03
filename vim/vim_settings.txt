@@ -15,3 +15,10 @@ set cursorline
 set cursorcolumn
 
 "set spell
+
+
+"call plug#begin('./plugged')
+
+"Plug 'vim-scripts/AutoComplPop'
+
+"call plug#end()
