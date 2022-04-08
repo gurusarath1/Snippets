@@ -72,7 +72,9 @@ x - delete current letter
 // Copy ---------------------------------------------------------------------------------
 
 yy - copy current line
+Y - Current pos to end of line delete
 3yy - copy 3 lines from current position
+
 yw - Copy from current pos to end of word
 yiw - Copy the current word <FAV>
 
