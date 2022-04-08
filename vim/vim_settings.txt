@@ -30,6 +30,7 @@ colorscheme monokai
 set cursorline
 set cursorcolumn
 set list
+set showmatch
 
 " Search Settings
 set incsearch
