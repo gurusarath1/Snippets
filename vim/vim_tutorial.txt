@@ -28,6 +28,8 @@ N backward
 
 /\<word\> - whole word search
 
+* - search the current word that the cursor is on <FAV>
+
 
 
 Find and Replace ---------------------------------------------------------------------------------
@@ -61,14 +63,18 @@ $ (Dollar): Denotes the end of file
 :g/[pattern]/d - delete lines containing the pattern
 
 dd - delete current line
-dw - delete current word
+dw - delete from current pos to end of word
+diw - delete current word
 
+x - delete current letter
 
 
 // Copy ---------------------------------------------------------------------------------
 
 yy - copy current line
 3yy - copy 3 lines from current position
+yw - Copy from current pos to end of word
+yiw - Copy the current word <FAV>
 
 Visual mode -
 y -copy
