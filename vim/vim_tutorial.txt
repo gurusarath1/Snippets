@@ -37,9 +37,9 @@ Find and Replace ---------------------------------------------------------------
 
 Examples --
 s/foo/bar - replace foo with bar in current line (only one occurance)
-%s/foo/bar - replace foo with bar in current file (all)
+%s/foo/bar/g - replace foo with bar in current file (all) - g for more than one occurance in a line
 %s/foo/bar/i - replace foo with bar in current file (all)(ignore case)
-
+%s/foo/bar/gc - interactive replace full file
 
 
 // Movements ---------------------------------------------------------------------------------
