@@ -36,10 +36,12 @@ Find and Replace ---------------------------------------------------------------
 :[range]s/{pattern}/{string}/[flags] [count]
 
 Examples --
-s/foo/bar - replace foo with bar in current line (only one occurance)
-%s/foo/bar/g - replace foo with bar in current file (all) - g for more than one occurance in a line
-%s/foo/bar/i - replace foo with bar in current file (all)(ignore case)
-%s/foo/bar/gc - interactive replace full file
+:s/foo/bar - replace foo with bar in current line (only one occurance)
+:%s/foo/bar/g - replace foo with bar in current file (all) - g for more than one occurance in a line
+:%s/foo/bar/gi - replace foo with bar in current file (all)(ignore case)
+
+
+:%s/foo/bar/gc - interactive replace full file <fav>
 
 
 // Movements ---------------------------------------------------------------------------------
