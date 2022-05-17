@@ -1,0 +1,4 @@
+rgb(,,);
+rgba(,,,);
+#FFFFFF; /*red green blue*/
+#FFF; /*red green blue repeated nibble*/

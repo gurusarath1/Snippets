@@ -1,0 +1,95 @@
+/*select a tag*/
+h1 {
+
+}
+
+/*Select multiple tags*/
+h1, h2, p {
+
+}
+
+
+/*Select descendents*/
+
+/*p tag inside footer*/
+footer p {
+
+}
+
+/*li tag inside footer*/
+p li {
+
+}
+
+
+/*ID Selector*/
+#id_name {
+
+}
+
+/*class selector*/
+.class_name {
+
+}
+
+/*psuedo class*/
+
+/*first li element*/
+li:first-child {
+
+}
+
+li:last-child {
+
+}
+
+li:nth-child(2) {
+
+}
+
+li:nth-child(odd) {
+
+}
+
+li:nth-child(even) {
+
+}
+
+/*Style hyperlinks*/
+
+
+a:link {
+
+}
+
+a:visited {
+
+}
+
+a:hover {
+
+}
+
+a:active {
+
+}
+
+/*-----------------------------------------*/
+
+
+/*
+If multiple selectors point to the same element -> all apply
+
+In case of conflicing
+Priority of Selectors (Selector specificity)
+
+1. !important
+2. Inline style
+3. ID (#)
+4. Class (.)
+5. Element
+6. Universal (*) // Selects all
+
+Inheretance is not the same as selectors
+
+*/
