@@ -1,7 +1,22 @@
 Numpy
 
+np.unique
+
+np.bincount
+
+
+
+
 Matplotlib
 
 
 
 Sklearn
+
+sklearn.model_selection -> train_test_split
+
+sklearn.preprocessing -> StandardScaler
+
+Each classifier has a score method for calculating accuracy 
+
+sklearn.metrics -> accuracy_score
