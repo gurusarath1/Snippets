@@ -90,4 +90,9 @@ p - paste after cursor
 P - Paste before cursor
 
 
+// Indentation
+:>
+
+// Multiple line indentation
+Visual mode select lines + >
 
