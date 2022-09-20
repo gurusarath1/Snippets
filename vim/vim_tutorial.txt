@@ -22,6 +22,26 @@ V - visual line mode
 
 
 
+
+// Movements ---------------------------------------------------------------------------------
+:[line num] - jump to a line
+
+b,w - left right word movement
+{} - up down block movement
+gg G - line 0 and last line
+^ $ - start of line and end of line
+
+
+h j k l - left down up right
+10j - down 10 lines
+
+0 - Beginning of current lline
+$ - end of current line
+
+
+
+
+
 Search ---------------------------------------------------------------------------------
 /[pattern]  enter - search
 n forward
@@ -30,6 +50,11 @@ N backward
 /\<word\> - whole word search
 
 * - search the current word that the cursor is on <FAV>
+
+
+
+
+
 
 
 
@@ -45,13 +70,6 @@ Examples --
 :%s/foo/bar/gc - interactive replace full file <fav>
 
 
-// Movements ---------------------------------------------------------------------------------
-:[line num] - jump to a line
-
-b,w - left right word movement
-{} - up down block movement
-gg G - line 0 and line end
-^ $ - start of line and end of line
 
 
 
@@ -90,9 +108,18 @@ p - paste after cursor
 P - Paste before cursor
 
 
-// Indentation
+
+
+// Indentation ---------------------------------------------------------------------------------
 :>
 
 // Multiple line indentation
 Visual mode select lines + >
+
+
+
+
+// Macro ---------------------------------------------------------------------------------
+:norm 5j - store the 5j action
+@@ - do the above action (5j)
 
