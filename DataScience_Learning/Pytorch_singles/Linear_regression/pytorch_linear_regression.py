@@ -6,7 +6,8 @@ import torch.nn as nn
 
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
-
+from sklearn.metrics import mean_squared_error
+from sklearn.metrics import mean_absolute_error
 
 class linear_regression_model_pytorch(nn.Module):
 
@@ -38,12 +39,12 @@ def center_features_and_scale(data_x, eps=0.01):
 
 if __name__ == '__main__':
 
-    ## Import the whole csv dataset
+    ## Import the whole csv dataset -----------------------
     dataset_1 = np.loadtxt('dataset_1.csv', delimiter=',', skiprows=1)
     dataset_1_x = dataset_1[:,:-1]
     dataset_1_y = dataset_1[:,-1]
 
-    # Train test split
+    # Train test split --------------------
     dataset_1_x_train, dataset_1_x_test, dataset_1_y_train, dataset_1_y_test = train_test_split(dataset_1_x, dataset_1_y, test_size=0.1, shuffle=True)
     dataset_1_y_train = torch.Tensor(dataset_1_y_train)
     dataset_1_y_test = torch.Tensor(dataset_1_y_test)
@@ -52,11 +53,12 @@ if __name__ == '__main__':
     print('num features = ', dataset_1_x_train.shape[1])
     print('num outputs = ', 1)
 
-    # Center the data
+    # Center the data ----------------
     sc = StandardScaler()
     sc.fit(dataset_1_x_train)
     dataset_1_x_train = sc.transform(dataset_1_x_train)
     dataset_1_x_train = torch.Tensor(dataset_1_x_train)
+    # Apply same transformation on the test data
     dataset_1_x_test = sc.transform(dataset_1_x_test)
     dataset_1_x_test = torch.Tensor(dataset_1_x_test)
 
@@ -68,9 +70,11 @@ if __name__ == '__main__':
     loss_fn = nn.MSELoss()
 
     # Define optimizer
-    optimizer = torch.optim.SGD(my_model.parameters(), lr=0.05)
+    #optimizer = torch.optim.SGD(my_model.parameters(), lr=0.05)
+    optimizer = torch.optim.Adam(my_model.parameters(), lr=0.1)
 
-    num_epochs = 100
+    # Training --------------------
+    num_epochs = 500
     for epoch in range(num_epochs):
         
         optimizer.zero_grad()
@@ -81,12 +85,39 @@ if __name__ == '__main__':
         optimizer.step()
 
 
-    # Print weights
+    # Print weights ---------------
     for name, param in my_model.named_parameters():
         if param.requires_grad:
             print(name, param.data)
 
 
+    # Test Data Predictions ------------
     test_preds = my_model(dataset_1_x_test)
     print(test_preds)
     print(dataset_1_y_test)
+
+
+    # Model Evaluation ------------
+
+    # Mean squared error
+    mse_test = mean_squared_error(test_preds.detach().numpy(), dataset_1_y_test)
+    # Mean absolute error
+    mae_test = mean_absolute_error(test_preds.detach().numpy(), dataset_1_y_test)
+
+    print('mse_test = ', mse_test)
+    print('mae_test = ', mae_test)
+
+    # Residual plot
+    # TODO
+
+
+
+
+
+
+
+
+
+
+
+
