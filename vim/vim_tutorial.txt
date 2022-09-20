@@ -6,7 +6,8 @@
 :wq - save and quit
 
 :e! - undo all changes since last save
-
+:u - undo
+:4u - undo 4 last
 
 
 
