@@ -60,7 +60,7 @@ if __name__ == '__main__':
     num_epochs = 200
     for epoch in tqdm(range(num_epochs)):
 
-        ## Import the whole csv dataset -----------------------
+        ## Import the csv dataset in chunks -----------------------
         dataset_1_reader = pd.read_csv('dataset_2_big.csv', chunksize=1000)
 
 
