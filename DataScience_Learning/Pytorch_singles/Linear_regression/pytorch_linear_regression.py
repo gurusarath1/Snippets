@@ -45,7 +45,7 @@ if __name__ == '__main__':
     dataset_1_y = dataset_1[:,-1]
 
     # Train test split --------------------
-    dataset_1_x_train, dataset_1_x_test, dataset_1_y_train, dataset_1_y_test = train_test_split(dataset_1_x, dataset_1_y, test_size=0.1, shuffle=True)
+    dataset_1_x_train, dataset_1_x_test, dataset_1_y_train, dataset_1_y_test = train_test_split(dataset_1_x, dataset_1_y, test_size=0.3, shuffle=True)
     dataset_1_y_train = torch.Tensor(dataset_1_y_train)
     dataset_1_y_test = torch.Tensor(dataset_1_y_test)
 
@@ -71,10 +71,10 @@ if __name__ == '__main__':
 
     # Define optimizer
     #optimizer = torch.optim.SGD(my_model.parameters(), lr=0.05)
-    optimizer = torch.optim.Adam(my_model.parameters(), lr=0.1)
+    optimizer = torch.optim.Adam(my_model.parameters(), lr=0.05)
 
     # Training --------------------
-    num_epochs = 500
+    num_epochs = 5000
     for epoch in range(num_epochs):
         
         optimizer.zero_grad()
@@ -99,16 +99,29 @@ if __name__ == '__main__':
 
     # Model Evaluation ------------
 
+    test_preds = test_preds.detach().numpy().squeeze()
+    x_max = np.max( [np.max(test_preds), np.max(dataset_1_y_test.detach().numpy())] )
+    x_min = np.min( [np.min(test_preds), np.min(dataset_1_y_test.detach().numpy())] )
+
+
     # Mean squared error
-    mse_test = mean_squared_error(test_preds.detach().numpy(), dataset_1_y_test)
+    mse_test = mean_squared_error(test_preds, dataset_1_y_test)
     # Mean absolute error
-    mae_test = mean_absolute_error(test_preds.detach().numpy(), dataset_1_y_test)
+    mae_test = mean_absolute_error(test_preds, dataset_1_y_test)
 
     print('mse_test = ', mse_test)
     print('mae_test = ', mae_test)
 
-    # Residual plot
-    # TODO
+    # Residual plot 
+    fig, ax = plt.subplots(1,1,figsize=(7,7))
+
+    ax.scatter( test_preds, test_preds - dataset_1_y_test.detach().numpy(), c='red', marker='x', edgecolor='white', label='Test Data' )
+
+    ax.set_xlabel('predicted values')
+    ax.legend(loc='upper left')
+    ax.hlines(y=0, xmin=x_min-2, xmax=x_max+2, color='grey', lw=2)
+    plt.tight_layout()
+    plt.show()
 
 
 
