@@ -31,6 +31,8 @@ def create_simple_ann_pytorch(in_dim, hid_dim, out_dim, num_layers=1, activation
 
 if __name__ == '__main__':
 
+    device = 'cpu'
+
     dataset_1 = np.genfromtxt('dataset_2.csv', delimiter=',', skip_header=1) 
     dataset_1_x = dataset_1[:,:-1]
     dataset_1_y = dataset_1[:,-1]
@@ -57,8 +59,20 @@ if __name__ == '__main__':
     loss_fn = nn.BCELoss()
     optimizer = torch.optim.Adam(my_model.parameters(), lr=0.01)
 
+ 
+    if torch.cuda.is_available():
 
-    num_epochs = 100
+        print('Num devices = ', torch.cuda.device_count())
+        print('Device Name = ', torch.cuda.get_device_name(0))
+
+        my_model = my_model.to(device)
+
+        dataset_1_x_validation = dataset_1_x_validation.to(device)
+        dataset_1_y_validation = dataset_1_y_validation.to(device)
+
+
+
+    num_epochs = 10
     train_loss_history = []
     validation_loss_history = []
     train_accuracy_history = []
@@ -68,25 +82,29 @@ if __name__ == '__main__':
         is_correct = 0
         for x_batch, y_batch in train_dl:
 
+            if torch.cuda.is_available():
+                x_batch = x_batch.to(device)
+                y_batch = y_batch.to(device)
+
             optimizer.zero_grad()
             pred = my_model(x_batch)
             loss = loss_fn(pred, y_batch)
             loss.backward()
             optimizer.step()
 
-            train_loss_history.append(loss.item())
+            train_loss_history.append(loss.to('cpu').item())
             is_correct += ( torch.argmax(pred, dim=1) == torch.argmax(y_batch, dim=1) ).sum()
 
 
-        train_accuracy_history.append(is_correct / dataset_1_x_train.shape[0])
-
+        train_accuracy_history.append( (is_correct / dataset_1_x_train.shape[0]).to('cpu') )
+ 
 
         pred =  my_model(dataset_1_x_validation)
         loss = loss_fn(pred, dataset_1_y_validation)
-        validation_loss_history.append(loss.item())
+        validation_loss_history.append(loss.to('cpu').item())
 
         is_correct = ( torch.argmax(pred, dim=1) == torch.argmax(dataset_1_y_validation, dim=1) ).sum()
-        validation_accuracy_history.append(is_correct / dataset_1_x_validation.shape[0])
+        validation_accuracy_history.append( (is_correct / dataset_1_x_validation.shape[0]).to('cpu') )
 
     plt.plot(train_accuracy_history, label='Train accuracy')
     plt.plot(validation_accuracy_history, label='Validation Accuracy')
