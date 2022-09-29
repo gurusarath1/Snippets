@@ -11,13 +11,13 @@ if __name__ == '__main__':
     y = x * x
 
     y.backward(retain_graph=True) # Retain graph will let us use backward twice
-    print('y = ', y)
-    print('x = ', x)
-    print('x.grad = ', x.grad)
+    print('y = ', y) #9
+    print('x = ', x) #3
+    print('x.grad = ', x.grad) #6
 
     y.backward()
-    print('y = ', y)
-    print('x = ', x)
-    print('x.grad = ', x.grad)
+    print('y = ', y) #9
+    print('x = ', x) #3
+    print('x.grad = ', x.grad) #12 (6+6)
 
 
