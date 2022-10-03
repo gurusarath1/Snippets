@@ -11,21 +11,25 @@ from sklearn.model_selection import train_test_split
 
 from tqdm import tqdm
 
-def create_simple_ann_pytorch(in_dim, hid_dim, out_dim, num_layers=1, activation_fn=nn.ReLU() ):
+class Logistic_regression(nn.Module):
 
-    layers = []
+    def __init__(self, in_dim, out_dim):
+        super().__init__()
+        self.layers = [
+                nn.Linear(in_dim, out_dim),
+                nn.Sigmoid()
+                ]
 
-    for i in range(num_layers):
+        self.model = nn.Sequential(*self.layers)
 
-        if i == num_layers-1:
-            layers.append( nn.Linear(in_dim, out_dim) )
-            layers.append( nn.Sigmoid() )
-        else:
-            layers.append( nn.Linear(in_dim, hid_dim) )
-            layers.append( activation_fn )
-            in_dim = hid_dim
+    def forward(self, x):
+        return self.model(x)
 
-    return nn.Sequential(*layers)
+
+def weight_init(m):
+
+    if isinstance(m, nn.Linear):
+        nn.init.normal_(m.weight, 0.0, 0.2)
 
 
 if __name__ == '__main__':
@@ -44,8 +48,11 @@ if __name__ == '__main__':
     batch_size = 100
     train_dl = DataLoader(train_ds, batch_size, shuffle=True)
 
+    num_features = dataset_1_x_train.shape[1]
+    num_out_categories = 1
 
-    my_model = create_simple_ann_pytorch(8, 1, 1, num_layers=1) # Logistic regression
+    my_model = Logistic_regression(num_features, num_out_categories) # LogReg
+    my_model.apply(weight_init) # Apply Weights
     print(my_model)
 
     loss_fn = nn.BCELoss()

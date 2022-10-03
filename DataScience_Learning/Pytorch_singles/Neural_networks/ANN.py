@@ -12,21 +12,34 @@ from sklearn.model_selection import train_test_split
 
 from tqdm import tqdm
 
-def create_simple_ann_pytorch(in_dim, hid_dim, out_dim, num_layers=1, activation_fn=nn.ReLU() ):
 
-    layers = []
 
-    for i in range(num_layers):
+class ANN(nn.Module):
 
-        if i == num_layers-1:
-            layers.append( nn.Linear(in_dim, out_dim) )
-            layers.append( nn.Sigmoid() )
-        else:
-            layers.append( nn.Linear(in_dim, hid_dim) )
-            layers.append( activation_fn )
-            in_dim = hid_dim
+    def __init__(self, in_dim, out_dim):
+        super().__init__()
+        self.layers = [
+                nn.Linear(in_dim, in_dim+2),
+                nn.Sigmoid(),
+                nn.Linear(in_dim+2, in_dim+4),
+                nn.Sigmoid(),
+                nn.Linear(in_dim+4, out_dim+2),
+                nn.Sigmoid(),
+                nn.Linear(out_dim+2, out_dim),
+                nn.Softmax(dim=1),
+                ]
 
-    return nn.Sequential(*layers)
+        self.model = nn.Sequential(*self.layers)
+
+    def forward(self, x):
+        return self.model(x)
+
+
+def weight_init(m):
+
+    if isinstance(m, nn.Linear):
+        nn.init.normal_(m.weight, 0.0, 0.2)
+
 
 
 if __name__ == '__main__':
@@ -51,14 +64,15 @@ if __name__ == '__main__':
     num_features = dataset_1_x_train.shape[1]
     num_out_categories = dataset_1_y_train.shape[1]
 
-    my_model = create_simple_ann_pytorch(num_features, 9, num_out_categories, num_layers=3) # Logistic regression
+    my_model = ANN(num_features, num_out_categories) # ANN
+    my_model.apply(weight_init) # Apply Weights
     print(my_model)
 
-    loss_fn = nn.BCELoss()
-    optimizer = torch.optim.Adam(my_model.parameters(), lr=0.01)
+    loss_fn = nn.CrossEntropyLoss()
+    optimizer = torch.optim.Adam(my_model.parameters(), lr=0.001)
 
 
-    num_epochs = 100
+    num_epochs = 200
     train_loss_history = []
     validation_loss_history = []
     train_accuracy_history = []
@@ -76,6 +90,12 @@ if __name__ == '__main__':
 
             train_loss_history.append(loss.item())
             is_correct += ( torch.argmax(pred, dim=1) == torch.argmax(y_batch, dim=1) ).sum()
+
+            if(epoch > 0 and False):
+                print(pred)
+                print(y_batch)
+                print('is_correct = ',( torch.argmax(pred, dim=1) == torch.argmax(y_batch, dim=1) ).sum())
+                input('Wait?')
 
 
         train_accuracy_history.append(is_correct / dataset_1_x_train.shape[0])
