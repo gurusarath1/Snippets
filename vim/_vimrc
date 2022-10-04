@@ -22,7 +22,7 @@ set belloff=all
 
 "set spell
 
-" Move lines UP and DOWN
+" Move lines UP and DOWN (Ctrl + Shift + UP or DOWN)
 noremap <c-s-up> :call feedkeys( line('.')==1 ? '' : 'ddkP' )<CR>
 noremap <c-s-down> ddp
 
