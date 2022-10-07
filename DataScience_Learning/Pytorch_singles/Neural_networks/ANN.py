@@ -26,7 +26,7 @@ class ANN(nn.Module):
                 nn.Linear(in_dim+4, out_dim+2),
                 nn.Sigmoid(),
                 nn.Linear(out_dim+2, out_dim),
-                nn.Softmax(dim=1),
+                #nn.Softmax(dim=1), No need to add softmax as last layer # CrossEntropyLoss does Softmax internally 
                 ]
 
         self.model = nn.Sequential(*self.layers)
@@ -72,7 +72,7 @@ if __name__ == '__main__':
     optimizer = torch.optim.Adam(my_model.parameters(), lr=0.001)
 
 
-    num_epochs = 200
+    num_epochs = 70
     train_loss_history = []
     validation_loss_history = []
     train_accuracy_history = []
