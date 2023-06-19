@@ -6,44 +6,51 @@ import torch.nn as nn
 from torchvision.utils import make_grid
 from torchvision import transforms
 import torchvision
+import os
+import glob
+from torch.utils.data import Dataset
+import PIL
+from tqdm import tqdm
+import random
 
 SAVE_IMAGE_DIR = './saved_images/'
 UTIL_PRINTS = False
 
-def get_torch_transform_pil_image_torch_image(new_size=None, minus_1_to_1_scale=False):
 
+def get_torch_transforms_pil_image_to_torch_image(new_size=None, minus_1_to_1_scale=False):
     transforms_list = []
 
     if new_size:
         transforms_list.append(transforms.Resize(new_size))
 
-    transforms_list.append(transforms.ToTensor()) # Scales the pixels 0 - 1
+    transforms_list.append(transforms.ToTensor())  # Scales the pixels 0 - 1 # Changes from PIL/numpy(HxWxC) to (CxHxW)
 
     if minus_1_to_1_scale:
-        transforms_list.append( transforms.Lambda(lambda x: (x*2) - 1) ) # Scale the pixel values to -1 to 1
+        transforms_list.append(transforms.Lambda(lambda x: (x * 2) - 1))  # Scale the pixel values to -1 to 1
 
-    return transforms.Compose(transforms_list)
+    return transforms_list
 
-def get_torch_transform_torch_image_to_pil_image(new_size=None, minus_1_to_1_scaled_image=False):
 
+def get_torch_transforms_torch_image_to_pil_image(new_size=None, minus_1_to_1_scaled_image=False):
     transforms_list = []
 
     if new_size:
         transforms_list.append(transforms.Resize(new_size))
-    
+
     if minus_1_to_1_scaled_image:
-        transforms_list.append( transforms.Lambda(lambda x: (x+1)/2) )
+        transforms_list.append(transforms.Lambda(lambda x: (x + 1) / 2))
     else:
         # We assume 0-1 pixel scale in the input
         pass
-    
-    transforms_list.append( transforms.Lambda(lambda x: x.permute(1,2,0)) ) # Torch image Batch x Channel x Height x Width --> PIL image
-    transforms_list.append( transforms.Lambda(lambda x: x*255.0) ) # 0-1 scale --> 0-255 
-    transforms_list.append( transforms.Lambda(lambda x: x.numpy().astype(np.uint8)) ) # torch tensor ->  numpy array; PIL uses datatype of uint8
-    transforms_list.append( transforms.ToPILImage() )
 
-    return transforms.Compose(transforms_list)    
+    transforms_list.append(
+        transforms.Lambda(lambda x: x.permute(1, 2, 0)))  # Torch image Batch x Channel x Height x Width --> PIL image
+    transforms_list.append(transforms.Lambda(lambda x: x * 255.0))  # 0-1 scale --> 0-255
+    transforms_list.append(transforms.Lambda(
+        lambda x: x.numpy().astype(np.uint8)))  # torch tensor ->  numpy array; PIL uses datatype of uint8
+    transforms_list.append(transforms.ToPILImage())
 
+    return transforms_list
 
 
 def get_device():
@@ -194,3 +201,72 @@ def get_torch_model_output_size_at_each_layer(model, input_shape=0, input_tensor
         input_tensor = module(input_tensor)
         print(f'Tensor shape = {input_tensor.shape}')
         print('=====================================================')
+
+
+class ImageDatasetUnsupervisedLearning(Dataset):
+
+    def __init__(self, images_path, image_format='jpg', image_size=None, additional_transforms=None):
+
+        print(images_path + os.sep + '*.' + image_format)
+        self.image_files_list = glob.glob(images_path + os.sep + '*.' + image_format)
+
+        pil_to_torch_transforms = get_torch_transforms_pil_image_to_torch_image(new_size=None,
+                                                                                minus_1_to_1_scale=False)
+        torch_to_pil_transforms = get_torch_transforms_torch_image_to_pil_image(new_size=None,
+                                                                                minus_1_to_1_scaled_image=False)
+
+        if image_size:
+            pil_to_torch_transforms.append(transforms.Resize(image_size))
+
+        self.train_transforms = transforms.Compose(pil_to_torch_transforms)
+        self.display_transforms = transforms.Compose(torch_to_pil_transforms)
+
+        self.additional_transforms = additional_transforms
+
+    def __len__(self):
+        return len(self.image_files_list)
+
+    def __getitem__(self, idx):
+        torch_image = self.train_transforms(PIL.Image.open(self.image_files_list[idx]))
+
+        if self.additional_transforms:
+            torch_image = self.additional_transforms(torch_image)
+
+        return torch_image
+
+    def show_dataset_image(self, idx):
+        image = self.display_transforms(self[idx])
+        plt.imshow(image)
+        plt.show()
+
+    def show_some_random_images(self, num_images=3):
+        for _ in range(num_images):
+            idx = random.randint(0, len(self))
+            self.show_dataset_image(idx)
+
+    # TODO: Calc std pending
+    def get_per_channel_mean_and_std(self, color_images=True):
+        channel_sum = [0, 0, 0]
+        channel_sqr_sum = [0, 0, 0]
+
+        num_images = len(self)
+
+        if color_images:
+            for idx in tqdm(range(num_images)):
+                torch_image = self[idx]
+
+                num_pixels = torch_image.shape[1] * torch_image.shape[2]
+
+                r_sum = torch.sum(torch_image[0, :, :]) / num_pixels
+                g_sum = torch.sum(torch_image[1, :, :]) / num_pixels
+                b_sum = torch.sum(torch_image[2, :, :]) / num_pixels
+
+                channel_sum[0] += r_sum.item()
+                channel_sum[1] += g_sum.item()
+                channel_sum[2] += b_sum.item()
+
+            channel_sum[0] /= num_images
+            channel_sum[1] /= num_images
+            channel_sum[2] /= num_images
+
+            print(channel_sum)
