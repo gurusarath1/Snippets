@@ -8,3 +8,9 @@
 
 
 Code snippets for fast access anywhere
+
+
+| Syntax      | Description |
+| ----------- | ----------- |
+| Header      | Title       |
+| Paragraph   | Text        |
