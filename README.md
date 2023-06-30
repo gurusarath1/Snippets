@@ -10,6 +10,10 @@
 Code snippets for fast access anywhere
 
 
+
+
+### MarkDown Snippets
+
 | Syntax      | Description |
 | ----------- | ----------- |
 | Header      | Title       |
@@ -19,5 +23,7 @@ Code snippets for fast access anywhere
 ```c
 main()
 {
+  // This is a C code
+  printf("Hello User !");
 }
 ```
