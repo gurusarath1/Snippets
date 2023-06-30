@@ -14,3 +14,10 @@ Code snippets for fast access anywhere
 | ----------- | ----------- |
 | Header      | Title       |
 | Paragraph   | Text        |
+
+
+```c
+main()
+{
+}
+```
