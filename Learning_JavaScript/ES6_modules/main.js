@@ -1,0 +1,1 @@
+import default_imp, {getColor, getYear as gtyr} from 'test_module.js'
