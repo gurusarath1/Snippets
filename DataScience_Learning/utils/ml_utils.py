@@ -12,11 +12,220 @@ from torch.utils.data import Dataset
 import PIL
 from tqdm import tqdm
 import random
+import cv2
 
 SAVE_IMAGE_DIR = './saved_images/'
 UTIL_PRINTS = False
 
+'''
+Channel Ordering and Shape of image ---
 
+cv2.imread() - BGR (h,w,c)
+mpimg.imread() - RGB ()
+matplotlib.pyplot.imread - RGB (h,w,c)
+torchvision.io.read_image - RGB (c,h,w)
+PIL.Image.open - 
+'''
+
+#
+#
+#    OPEN CV functions
+#
+augmentations_list = ['vertical_flip',
+                      'horizontal_flip',
+                      'contrast_brightness',
+                      'rotation',
+                      'horizontal_shift',
+                      'vertical_shift',
+                      'salt_and_pepper_noise',
+                      ]
+
+
+# Image format = [h,w,c]
+def augmentation_functions(img: np.ndarray, augmentation: str = '', *args) -> np.ndarray:
+    print(f'augmentation = {augmentation} image_shape = {img.shape}')
+
+    img = img.copy()  # Do not modify the existing image
+
+    if augmentation == 'vertical_flip':  # -----------------------------
+        return cv2.flip(img, 0)
+
+    elif augmentation == 'horizontal_flip':  # -----------------------------
+        return cv2.flip(img, 1)
+
+    elif augmentation == 'contrast_brightness':  # -----------------------------
+        alpha = args[0]  # Contrast Control
+        beta = args[1]  # Brightness Control
+        print(f'alpha={alpha}  beta={beta}')
+        return cv2.convertScaleAbs(img, alpha=alpha, beta=beta)
+
+    elif augmentation == 'rotation':  # -----------------------------
+        angle = args[0]  # angle in degrees
+
+        h, w = img.shape[:2]
+        M = cv2.getRotationMatrix2D((int(w / 2), int(h / 2)), angle, 1)
+        img = cv2.warpAffine(img, M, (w, h))
+        return img
+
+
+    elif augmentation == 'horizontal_shift':  # -----------------------------
+        dir_ratio = args[0]
+        print(f'dir_ratio = {dir_ratio}')
+        # Check the range
+        assert -1 < dir_ratio < 1
+
+        fill_type = 'nearest'
+        if len(args) >= 2:
+            fill_type = args[1]
+
+        h, w = img.shape[:2]
+        num_pixels_shift = int(w * abs(dir_ratio))
+
+        # RIGHT SHIFT
+        if dir_ratio > 0:
+            img_cut = img.copy()
+            img_cut = img_cut[:, :w - num_pixels_shift, :]
+
+            if fill_type == 'resize':
+                return cv2.resize(img_cut, (h, w), cv2.INTER_CUBIC)
+            elif fill_type == 'nearest':
+                img[:, :, :] = img_cut[:, 0:1, :]  # Pick only the first column and broadcast
+                img[:, num_pixels_shift:, :] = img_cut[:, :, :]
+                return img
+
+        # LEFT SHIFT
+        elif dir_ratio < 0:
+            img_cut = img.copy()
+            img_cut = img_cut[:, num_pixels_shift:, :]
+
+            if fill_type == 'resize':
+                return cv2.resize(img_cut, (h, w), cv2.INTER_CUBIC)
+            elif fill_type == 'nearest':
+                img[:, :, :] = img_cut[:, -1:, :]  # Pick only the first column and broadcast
+                img[:, 0:w - num_pixels_shift, :] = img_cut[:, :, :]
+                return img
+
+        else:  # No shift
+            return img
+
+    elif augmentation == 'vertical_shift':  # -----------------------------
+        dir_ratio = args[0]
+
+        print(f'dir_ratio = {dir_ratio}')
+
+        # Check the range
+        assert -1 < dir_ratio < 1
+
+        fill_type = 'nearest'
+        if len(args) >= 2:
+            fill_type = args[1]
+
+        h, w = img.shape[:2]
+        num_pixels_shift = int(h * abs(dir_ratio))
+
+        # DOWN SHIFT
+        if dir_ratio > 0:
+            img_cut = img.copy()
+            img_cut = img_cut[:h - num_pixels_shift, :, :]
+
+            if fill_type == 'resize':
+                return cv2.resize(img_cut, (h, w), cv2.INTER_CUBIC)
+            elif fill_type == 'nearest':
+                img[:, :, :] = img_cut[0:1, :, :]  # Pick only the first column and broadcast
+                img[num_pixels_shift:, :, :] = img_cut[:, :, :]
+                return img
+
+        # UP SHIFT
+        elif dir_ratio < 0:
+            img_cut = img.copy()
+            img_cut = img_cut[num_pixels_shift:, :, :]
+
+            if fill_type == 'resize':
+                return cv2.resize(img_cut, (h, w), cv2.INTER_CUBIC)
+            elif fill_type == 'nearest':
+                img[:, :, :] = img_cut[-1:, :, :]  # Pick only the first column and broadcast
+                img[0:h - num_pixels_shift, :, :] = img_cut[:, :, :]
+                return img
+
+        else:  # No shift
+            return img
+
+    elif augmentation == 'salt_and_pepper_noise':
+        pixel_min = 0
+        pixel_max = 255
+        p = 0.005  # Probability of salt and pepper noise
+
+        if len(args) >= 3:
+            pixel_min = args[0]
+            pixel_max = args[1]
+            p = args[2]
+        elif len(args) == 2:
+            pixel_min = args[0]
+            pixel_max = args[1]
+        elif len(args) == 1:
+            pixel_max = args[0]
+
+        p = p / 2  # Probability of only salt/pepper noise
+
+        # Add SALT
+        noise_matrix = np.random.uniform(0, 1, size=img.shape[0:2])
+        noise_locations_matrix = (noise_matrix < p)
+        img[noise_locations_matrix] = pixel_max
+
+        # Add PEPPER
+        noise_matrix = np.random.uniform(0, 1, size=img.shape[0:2])
+        noise_locations_matrix = (noise_matrix < p)
+        img[noise_locations_matrix] = pixel_min
+
+        return img
+
+    else:  # No Augmentation # -----------------------------
+        return img
+
+
+def run_image_augmentation(in_images_path: str, out_images_dir: str = 'augmented_images', image_ext: str = '.jpg'):
+    onlyfiles = [f for f in os.listdir(in_images_path) if
+                 os.path.isfile(os.path.join(in_images_path, f)) and f.endswith(image_ext)]
+    out_images_path = os.path.join(os.getcwd(), out_images_dir)
+
+    for image_file_name in onlyfiles:
+        image_path = os.path.join(in_images_path, image_file_name)
+        out_image_path = os.path.join(out_images_path, 'aug_' + image_file_name)
+        img = cv2.imread(image_path)
+
+        aug_image = img
+
+        if random.choice([True, False]):
+            shift_ratio = random.random() * 0.4 - 0.2  # -0.2 to 0.2 ratio
+            aug_image = augmentation_functions(aug_image, 'vertical_shift', shift_ratio)
+        elif random.choice([True, False]):
+            shift_ratio = random.random() * 0.4 - 0.2  # -0.2 to 0.2 ratio
+            aug_image = augmentation_functions(aug_image, 'horizontal_shift', shift_ratio)
+        elif random.choice([True, False]):
+            angle = (random.random() * 90) - 45  # -45 to 45 degree
+            aug_image = augmentation_functions(aug_image, 'rotation', angle)
+
+        if random.choice([True, False]):
+            aug_image = augmentation_functions(aug_image, 'horizontal_flip')
+        elif random.choice([True, False]):
+            aug_image = augmentation_functions(aug_image, 'vertical_flip')
+
+        if random.choice([True, False]):
+            beta = random.randint(-30, 100)
+            aug_image = augmentation_functions(aug_image, 'contrast_brightness', 1, beta)
+
+        if random.choice([True, False]):
+            p = random.random() * 0.01
+            aug_image = augmentation_functions(aug_image, 'salt_and_pepper_noise', 0, 255, p)
+
+        print(out_image_path)
+        cv2.imwrite(out_image_path, aug_image)
+
+
+#
+#
+#    TORCH and OTHER functions
+#
 def get_torch_transforms_pil_image_to_torch_image(new_size=None, minus_1_to_1_scale=False):
     transforms_list = []
 
@@ -145,10 +354,12 @@ def display_image(tensor_image, batch_dim_exist=False, batch_dim_index=0, save_i
         plt.show()
 
 
-def get_numpy_onehot_array(categorical_numpy_array):
+def get_numpy_onehot_array(categorical_numpy_array, num_categories=None):
     categorical_numpy_array = categorical_numpy_array.astype(int)
 
-    num_categories = np.max(categorical_numpy_array) + 1
+    if not num_categories:
+        num_categories = np.max(categorical_numpy_array) + 1
+
     num_data_points = categorical_numpy_array.shape[0]  # Num samples
     if UTIL_PRINTS: print(f'num_categories = {num_categories}  num_data_points={num_data_points}')
 
@@ -176,6 +387,28 @@ def shuffle_two_torch_array(data_x, data_y):
 
     shuffle_idxs = torch.randperm(num_data_points)
     return data_x[shuffle_idxs], data_y[shuffle_idxs]
+
+
+def save_torch_model(model, file_name='saved_model', additional_info='', path='./saved_models', two_copies=True):
+    torch.save(model.state_dict(), path + '/' + file_name + additional_info)
+
+    if two_copies:
+        torch.save(model.state_dict(), path + '/' + file_name + '_LATEST_COPY')
+
+
+def load_torch_model(model, file_name='saved_model', path='saved_models', load_latest=True):
+
+    if load_latest:
+        full_path = os.path.join(path, file_name + '_LATEST_COPY')
+    else:
+        full_path = os.path.join(path, file_name)
+
+    if os.path.isfile(full_path):
+        print(f'Loading Model {full_path} ...')
+        model.load_state_dict(torch.load(full_path))
+    else:
+        print('MODEL FILE NOT FOUND .. .. SKIP LOADING ..')
+
 
 
 def get_torch_model_output_size_at_each_layer(model, input_shape=0, input_tensor=None):
