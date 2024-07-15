@@ -21,5 +21,7 @@ urlpatterns = [
     path('', include('baseapp.urls')), 
     path('testapp_lesson_1/', include('testapp_lesson_1.urls')), 
     path('testapp_lesson_2/', include('testapp_lesson_2_database.urls')), 
+    path('testapp_lesson_3/', include('testapp_lesson_3_template.urls')), 
+    path('testapp_lesson_5/', include('testapp_lesson_5_database_forms.urls')), 
     path('admin/', admin.site.urls),
 ]

@@ -1,4 +1,4 @@
-from django import forms    
+from django import forms
 
 class ApplicationForm(forms.Form): 
     name = forms.CharField(label='Name of Applicant', max_length=50) 

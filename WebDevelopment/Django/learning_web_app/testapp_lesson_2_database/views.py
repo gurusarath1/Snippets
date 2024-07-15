@@ -4,8 +4,10 @@ from .forms import ApplicationForm
 
 # http://127.0.0.1:8000/testapp_lesson_2/page_1/
 def database_page_1(request):
+    if request.method == 'POST':
+        return HttpResponse("Posted")
 
-    form = ApplicationForm() 
-
+    form = ApplicationForm()
     return render(request, 'form.html', {'form': form}) 
+
 

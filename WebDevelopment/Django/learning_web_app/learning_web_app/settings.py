@@ -42,6 +42,9 @@ INSTALLED_APPS = [
     'testapp_lesson_1',
     #'testapp_lesson_2_database', <-- THIS DOES NOT WORK
     'testapp_lesson_2_database.apps.TestappLesson2DatabaseConfig',
+    'testapp_lesson_3_template', # <------------------------------------------- This is needed to use templates
+    'testapp_lesson_4_database_admin',
+    'testapp_lesson_5_database_forms',
 ]
 
 MIDDLEWARE = [
