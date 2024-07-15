@@ -1,0 +1,7 @@
+{% extends 'base.html' %} {% block content %}
+<h2>This is from t2.html</h2>
+<h3>var1 from python = {{ var1 }}</h3>
+<h3>var2 from python = {{ var2 }}</h3>
+<a href="{% url 'name_t1' %}">Goto T1</a>
+<!-- name_t1 is the name in urls given for the route -->
+{% endblock %}

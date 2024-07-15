@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title></title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="" />
+  </head>
+  <body>
+    <h1>CRUD Operations on Student Database</h1>
+
+    <form method="post" action="{% url 'submit_student_op' %}">
+      {% csrf_token %}
+      <table>
+        <tr>
+          <th>Name</th>
+          <th>Score</th>
+          <th>Age</th>
+          <th>Operation</th>
+        </tr>
+
+        {% if not student_form.instance.id %}
+        <!-- ADD NEW ENTRY FORM -->
+        {% for field in student_form %}
+        <td>{{ field }}</td>
+        {% endfor %}
+        <td><button name="create">CREATE</button></td>
+        <!-- END IF -->
+        {%endif%}
+
+        <!-- Show data (READ) -->
+        {% for student in student_db %}
+        <tr>
+          {% if student_form.instance.id == student.id %}
+
+          <!-- UPDATE  FORM -->
+          {% for field in student_form %}
+          <td>{{ field }}</td>
+          {% endfor %}
+          <td>
+            <button formnovalidate name="save" value="{{ student.id }}">
+              SAVE
+            </button>
+          </td>
+
+          {% else %}
+
+          <td>{{ student.name }}</td>
+          <td>{{ student.score }}</td>
+          <td>{{ student.age}}</td>
+
+          <td>
+            <button formnovalidate name="update" value="{{ student.id }}">
+              UPDATE
+            </button>
+            <button formnovalidate name="delete" value="{{ student.id }}">
+              DELETE
+            </button>
+          </td>
+
+          {%endif%}
+        </tr>
+        {% endfor%}
+      </table>
+    </form>
+  </body>
+</html>
