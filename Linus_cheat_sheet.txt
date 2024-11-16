@@ -1,3 +1,10 @@
-ls -Fal
-ls -FaRl
+Listing files ---
+
+ls -Fal. --> F - for non color display, a - show hidden, l - long listing
+ls -FaRl --> R - Recursive
+
+ls M*
+ls M?sic
+ls M[ur]sic
+ls M[a-z]sic
 
