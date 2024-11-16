@@ -1,10 +1,43 @@
-Listing files ---
+1. Listing files ---
+--------------------
+$ ls -Fal. --> F - for non color display, a - show hidden, l - long listing
+$ ls -FaRl --> R - Recursive
 
-ls -Fal. --> F - for non color display, a - show hidden, l - long listing
-ls -FaRl --> R - Recursive
+$ ls M*
+$ ls M?sic
+$ ls M[ur]sic
+$ ls M[a-z]sic
 
-ls M*
-ls M?sic
-ls M[ur]sic
-ls M[a-z]sic
+
+inode number - Unique number assigned by the os to all the files in the virtual file system
+$ ls -i --> i - inode number
+
+
+2. Copying files ---
+--------------------
+cp source destination
+The new file acts like a brand new file with updated modification time.
+
+$ cp -iR src dst --> i - ask whether to overwrite a file
+
+3. Linking files ---
+--------------------
+Symbolic link
+Hard link
+
+Symbolic link ---
+$ ln -s original_file s_link_file
+inode number is different from the orginal file. New file is created that points to the original file.
+
+Hard link --
+$ ln orginal_file h_link_file
+inode number is the same as the original file. However they are physically the same file.
+
+
+
+
+
+
+
+
 
