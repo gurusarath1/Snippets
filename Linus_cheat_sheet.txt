@@ -8,6 +8,7 @@ $ ls M?sic
 $ ls M[ur]sic
 $ ls M[a-z]sic
 
+$ tree
 
 inode number - Unique number assigned by the os to all the files in the virtual file system
 $ ls -i --> i - inode number
@@ -32,6 +33,61 @@ inode number is different from the orginal file. New file is created that points
 Hard link --
 $ ln orginal_file h_link_file
 inode number is the same as the original file. However they are physically the same file.
+
+
+4. Make Directory ---
+---------------------
+
+$ mkdir dirname
+$ mkdir -p dir1/dir2/dir3. --> buld create directory
+
+5. Remove Directory ---
+-----------------------
+
+$ rmdir dirname --> Only deletes empty directory
+
+6. Remove file ---
+------------------
+
+$ rm -rf --> r - recursive, f - force, don't ask
+$ rm -ri --> i - ask
+
+7. Check the type of file ---
+-----------------------------
+
+$ file filename
+
+8. Viewing the whole file ---
+-----------------------------
+
+$ cat -n filename --> n - line number
+
+$ more filename --> use q to quit
+$ less filename --> Advanced version of more
+more is a pager utility. It is also used to view man pages
+
+$ head filename --> first 10 lines
+$ tail filename --> last 10 lines
+$ tail -n 3 filename --> last 3 lines
+$ tail -f filename --> peek inside a file as it is beign processed by another process.
+
+9. Searching the virtual file system ---
+------------------------------------------
+
+$ find dir_path -name filename
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
