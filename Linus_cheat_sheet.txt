@@ -77,6 +77,125 @@ $ tail -f filename --> peek inside a file as it is beign processed by another pr
 $ find dir_path -name filename
 
 
+20. List process ---
+--------------------
+
+$ ps
+$ ps -A --> All
+$ ps --forest --> tree view of parent child processes
+
+ps cols ---
+PID - process ID
+PPID - parent process ID
+C - Last used processor
+
+
+$ top
+top cols ---
+PID - process id
+PR - priority
+NI - Nice number
+VIRT - total amount of virtual memory
+RES - anount of phy memory
+SHR - amount of shared mem with other processes
+S - state of the process
+
+$ htop
+
+21. Kill a process ---
+----------------------
+
+$ kill pid
+
+kill sends TERM signal (terminate if possible) to the process
+
+# killall *wildcardnameofprocess
+
+
+22. Mounting ---
+----------------
+
+$ mount --> list of mounted devices
+
+$ mount -t type device directory
+
+windows removable media device types
+vfat - windows long file system
+ntfs - windows advanced file system
+iso9660 - CD-ROM
+
+$ umount directory
+
+23. Space availble ---
+----------------------
+
+$ df -h --> h - size in human readable format
+
+show size of folders in the current directory
+$ du -h
+
+24. sort ---
+------------
+
+$ sort filename
+$ sort -n filename --> n - sort numbers
+$ sort -M filename --> M - sort first three letter month
+$ sort -r filename --> r - sort in reverses
+
+$ ls path | sort
+
+
+25. searching for text ---
+---------------------------
+
+$ grep options pattern file
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
 
 
 
