@@ -151,6 +151,22 @@ $ ls path | sort
 $ grep options pattern file
 
 
+26. source and .
+----------------
+
+source filename
+or
+. filename
+
+executes the file in the current shell without creating a child shell
+
+27. export
+----------
+
+export var_name
+
+sends the env variable to the child process
+
 
 
 
